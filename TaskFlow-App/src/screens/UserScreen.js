@@ -15,7 +15,7 @@ const logros = [
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 
-const UserScreen = () => {
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>Estadísticas</Text>
@@ -40,7 +40,7 @@ const UserScreen = () => {
       ))}
     </ScrollView>
   );
-};
+
 
 const styles = StyleSheet.create({
   container: {

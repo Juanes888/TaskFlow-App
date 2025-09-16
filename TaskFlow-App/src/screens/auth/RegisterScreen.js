@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { estilos } from "../styles/RegisterScreenStyles";
+import { estilos } from "../../styles/RegisterScreenStyles";
 
 const RegisterScreen = ({ navigation }) => {
   const [nombre, setNombre] = useState("");

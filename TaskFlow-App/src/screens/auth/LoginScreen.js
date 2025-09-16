@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { estilos } from "../styles/LoginScreenStyles";
+import { estilos } from "../../styles/LoginScreenStyles";
 
 const LoginScreen = ({ navigation }) => {
   const [correo, setCorreo] = useState("");

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { colors } from "../constants/colors";
+import { colors } from "../constants/Colors";
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
@@ -54,4 +54,3 @@ const styles = StyleSheet.create({
 });
 
 export default SplashScreen;
- 
