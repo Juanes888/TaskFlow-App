@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { estilos } from "../../styles/LoginScreenStyles";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../services/firebaseConfig";
 
 const LoginScreen = ({ navigation }) => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
 
-  const manejarLogin = () => {
-    navigation.replace("Inicio");
+  const manejarLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, correo, contrasena);
+      navigation.replace("Inicio");
+    } catch (error) {
+      alert("Error al iniciar sesión: " + error.message);
+    }
   };
 
   return (
@@ -21,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={estilos.subtitulo}>Inicia sesión para continuar</Text>
           </View>
 
-          <View style={estilos.formulario}>
+          <View style={estilos.formularioBox}>
             <View style={estilos.grupoInput}>
               <Text style={estilos.etiqueta}>Correo electrónico</Text>
               <TextInput style={estilos.input} placeholder="juanitoperez@gmail.com" value={correo} onChangeText={setCorreo} keyboardType="email-address" autoCapitalize="none"/>

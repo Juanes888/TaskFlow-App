@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { estilos } from "../../styles/RegisterScreenStyles";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../services/firebaseConfig";
 
 const RegisterScreen = ({ navigation }) => {
   const [nombre, setNombre] = useState("");
@@ -9,8 +11,13 @@ const RegisterScreen = ({ navigation }) => {
   const [contrasena, setContrasena] = useState("");
   const [confirmarContrasena, setConfirmarContrasena] = useState("");
 
-  const manejarRegistro = () => {
-    navigation.replace("Inicio");
+  const manejarRegistro = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, correo, contrasena);
+      navigation.replace("Login");
+    } catch (error) {
+      alert("Error al registrarse: " + error.message);
+    }
   };
 
   return (
@@ -26,7 +33,7 @@ const RegisterScreen = ({ navigation }) => {
               </Text>
             </View>
 
-            <View style={estilos.formulario}>
+            <View style={estilos.formularioBox}>
               <View style={estilos.grupoInput}>
                 <Text style={estilos.etiqueta}>Nombre completo</Text>
                 <TextInput style={estilos.input} placeholder="juanito perez" value={nombre} onChangeText={setNombre}/>

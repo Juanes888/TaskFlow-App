@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import {View,Text,TouchableOpacity,ScrollView,SafeAreaView,Switch,}
-from "react-native"
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Switch } from "react-native"
+import { MaterialIcons } from '@expo/vector-icons';
 import styles from "../styles/SettingsScreenStyles"
 
 const SettingsScreen = ({ navigation }) => {
@@ -47,31 +47,30 @@ const SettingsScreen = ({ navigation }) => {
           />
         </View>
 
-        <View className="seccion">
-          <Text className="titulo-seccion">Cronómetro</Text>
-
+        <View style={styles.seccionBox}>
+          <Text style={styles.tituloSeccion}>Cronómetro</Text>
           <ElementoAjuste titulo="Duración concentración" subtitulo="25 minutos" />
           <ElementoAjuste titulo="Descanso corto" subtitulo="5 minutos" />
           <ElementoAjuste titulo="Descanso largo" subtitulo="15 minutos" />
         </View>
 
-        <View className="seccion">
-          <Text className="titulo-seccion">Datos</Text>
+        <View style={styles.seccionBox}>
+          <Text style={styles.tituloSeccion}>Datos</Text>
           <ElementoAjuste titulo="Exportar datos" subtitulo="Guardar tareas y estadísticas" />
           <ElementoAjuste titulo="Importar datos" subtitulo="Restaurar desde archivo" />
           <ElementoAjuste titulo="Limpiar datos" subtitulo="Eliminar todas las tareas" />
         </View>
 
-        <View className="seccion">
-          <Text className="titulo-seccion">Soporte</Text>
-
+        <View style={styles.seccionBox}>
+          <Text style={styles.tituloSeccion}>Soporte</Text>
           <ElementoAjuste titulo="Ayuda" subtitulo="Preguntas frecuentes" />
           <ElementoAjuste titulo="Contacto" subtitulo="Enviar comentarios" />
           <ElementoAjuste titulo="Acerca de" subtitulo="Versión 1.0.0" />
         </View>
 
-        <View className="seccion-cerrar">
-          <TouchableOpacity className="boton-cerrar" onPress={() => navigation.replace("Login")}>
+        <View style={styles.seccionCerrar}>
+          <TouchableOpacity style={styles.botonCerrar} onPress={() => navigation.replace("Login")}> 
+            <MaterialIcons name="logout" size={22} color="#fff" style={{ marginRight: 8 }} />
             <Text style={styles.textoCerrar}>Cerrar Sesión</Text>
           </TouchableOpacity>
         </View>

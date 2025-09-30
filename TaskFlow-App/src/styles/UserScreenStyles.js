@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../constants/colors.js";
+import { colors } from "../constants/Colors";
 
 const estilos = StyleSheet.create({
   contenedor: {
@@ -136,7 +136,7 @@ const estilos = StyleSheet.create({
     alignItems: "center",
   },
   textoDesbloqueado: {
-    color: colores.superficie,
+    color: colors.surface,
     fontSize: 12,
     fontWeight: "bold",
   },
