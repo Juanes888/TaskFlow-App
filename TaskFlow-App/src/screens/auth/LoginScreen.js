@@ -4,10 +4,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { estilos } from "../../styles/LoginScreenStyles";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
+import { useGoogleAuth } from "../../services/googleAuthService";
+import GoogleSignInButton from "../../components/GoogleSignInButton/GoogleSignInButton";
 
 const LoginScreen = ({ navigation }) => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
+  const { signInWithGoogle } = useGoogleAuth();
 
   const manejarLogin = async () => {
     try {
@@ -15,6 +18,17 @@ const LoginScreen = ({ navigation }) => {
       navigation.replace("Inicio");
     } catch (error) {
       alert("Error al iniciar sesión: " + error.message);
+    }
+  };
+
+  const manejarGoogleLogin = async () => {
+    try {
+      const user = await signInWithGoogle();
+      if (user) {
+        navigation.replace("Inicio");
+      }
+    } catch (error) {
+      alert("Error al iniciar sesión con Google: " + error.message);
     }
   };
 
@@ -31,24 +45,36 @@ const LoginScreen = ({ navigation }) => {
           <View style={estilos.formularioBox}>
             <View style={estilos.grupoInput}>
               <Text style={estilos.etiqueta}>Correo electrónico</Text>
-              <TextInput style={estilos.input} placeholder="juanitoperez@gmail.com" value={correo} onChangeText={setCorreo} keyboardType="email-address" autoCapitalize="none"/>
+              <TextInput 
+                style={estilos.input} 
+                placeholder="juanitoperez@gmail.com" 
+                value={correo} 
+                onChangeText={setCorreo} 
+                keyboardType="email-address" 
+                autoCapitalize="none"
+              />
             </View>
 
             <View style={estilos.grupoInput}>
               <Text style={estilos.etiqueta}>Contraseña</Text>
-              <TextInput style={estilos.input} placeholder="••••••••" value={contrasena} onChangeText={setContrasena} secureTextEntry/>
+              <TextInput 
+                style={estilos.input} 
+                placeholder="••••••••" 
+                value={contrasena} 
+                onChangeText={setContrasena} 
+                secureTextEntry
+              />
             </View>
 
             <TouchableOpacity style={estilos.botonOlvido}>
               <Text style={estilos.textoOlvido}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={estilos.botonPrincipal}
-              onPress={manejarLogin}
-            >
+            <TouchableOpacity style={estilos.botonPrincipal} onPress={manejarLogin}>
               <Text style={estilos.textoBoton}>Iniciar Sesión</Text>
             </TouchableOpacity>
+
+            <GoogleSignInButton onPress={manejarGoogleLogin} />
 
             <View style={estilos.registroContenedor}>
               <Text style={estilos.textoRegistro}>¿No tienes cuenta? </Text>

@@ -8,6 +8,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import UserScreen from "./src/screens/UserScreen";
 import { Ionicons } from '@expo/vector-icons';
+import EditProfileScreen from "./src/screens/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +48,8 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Registro" component={RegisterScreen} />
         <Stack.Screen name="Inicio" component={MainTabs} />
+        <Stack.Screen name="Usuario" component={UserScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
