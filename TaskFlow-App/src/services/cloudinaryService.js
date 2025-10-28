@@ -30,13 +30,28 @@ export const pickImage = async () => {
 
 export const uploadImageToCloudinary = async (imageUri) => {
     try {
+        if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
+            throw new Error('Las credenciales de Cloudinary no están configuradas');
+        }
+
         const formData = new FormData();
+        const localUri = imageUri;
+        const filename = localUri.split('/').pop();
+        const match = /\.(\w+)$/.exec(filename);
+        const type = match ? `image/${match[1]}` : 'image/jpeg';
+
         formData.append('file', {
-            uri: imageUri,
-            type: 'image/jpeg',
-            name: 'profile_image.jpg',
+            uri: localUri,
+            name: filename,
+            type,
         });
+        
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+        console.log('Uploading to Cloudinary with:', {
+            cloudName: CLOUDINARY_CLOUD_NAME,
+            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        });
 
         const response = await fetch(
             `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -44,20 +59,23 @@ export const uploadImageToCloudinary = async (imageUri) => {
                 method: 'POST',
                 body: formData,
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data',
                 },
             }
         );
 
+        const responseData = await response.json();
+
         if (!response.ok) {
-            throw new Error('Error al subir la imagen');
+            throw new Error(responseData.error?.message || 'Error al subir la imagen');
         }
 
-        const data = await response.json();
-        return data.secure_url;
+        console.log('Upload successful:', responseData);
+        return responseData.secure_url;
     } catch (error) {
-        console.error('Error uploading image to Cloudinary:', error);
-        throw error;
+        console.error('Error detallado al subir imagen a Cloudinary:', error);
+        throw new Error(`Error al subir la imagen: ${error.message}`);
     }
 };
 

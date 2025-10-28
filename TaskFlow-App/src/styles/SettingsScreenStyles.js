@@ -3,11 +3,9 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   seccionBox: {
     backgroundColor: '#fff',
-    borderRadius: 16,
-    marginHorizontal: 12,
-    marginTop: 20,
-    marginBottom: 8,
-    paddingBottom: 4,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.07,
@@ -112,6 +110,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#ffffff",
     fontWeight: "bold",
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#eee',
+  },
+  profileInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 24,
+  },
+  saveButton: {
+    backgroundColor: '#1976d2',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

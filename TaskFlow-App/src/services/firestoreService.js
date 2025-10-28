@@ -1,18 +1,27 @@
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-import { app } from "./firebaseConfig";
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from './firebaseConfig';
 
-const db = getFirestore(app);
-
-export const saveUserProfile = async (uid, data) => {
-    await setDoc(doc(db, "users", uid), data, { merge: true });
+export const getUserProfile = async (userId) => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+    
+    if (userSnap.exists()) {
+      return userSnap.data();
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting user profile:', error);
+    throw error;
+  }
 };
 
-export const getUserProfile = async (uid) => {
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? docSnap.data() : null;
-};
-
-export const updateUserProfile = async (uid, data) => {
-    await updateDoc(doc(db, "users", uid), data);
+export const saveUserProfile = async (userId, profileData) => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    await setDoc(userRef, profileData, { merge: true });
+  } catch (error) {
+    console.error('Error saving user profile:', error);
+    throw error;
+  }
 };

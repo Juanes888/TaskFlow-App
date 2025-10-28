@@ -1,12 +1,44 @@
-import React, { useState } from "react"
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Switch } from "react-native"
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Switch, Image, ActivityIndicator, TextInput } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
-import styles from "../styles/SettingsScreenStyles"
+import { auth } from "../services/firebaseConfig";
+import { saveUserProfile, getUserProfile } from "../services/firestoreService"; // Asegúrate de que esta función esté implementada
+import { selectAndUploadImage } from "../services/cloudinaryService";
+import styles from "../styles/SettingsScreenStyles";
 
 const SettingsScreen = ({ navigation }) => {
-  const [notificaciones, setNotificaciones] = useState(true)
-  const [modoOscuro, setModoOscuro] = useState(false)
-  const [sonidos, setSonidos] = useState(true)
+  const [notificaciones, setNotificaciones] = useState(true);
+  const [modoOscuro, setModoOscuro] = useState(false);
+  const [sonidos, setSonidos] = useState(true);
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [loading, setLoading] = useState(false);
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user) {
+        const profile = await getUserProfile(user.uid); // Obtener el perfil del usuario
+        if (profile) {
+          setName(profile.name);
+          setPhoto(profile.photo);
+        }
+      }
+    };
+    fetchUserProfile();
+  }, [user]);
+
+  const handleImagePick = async () => {
+    setLoading(true);
+    const url = await selectAndUploadImage();
+    if (url) setPhoto(url);
+    setLoading(false);
+  };
+
+  const handleSave = async () => {
+    if (!user) return;
+    await saveUserProfile(user.uid, { name, photo }); // Guardar el perfil actualizado
+  };
 
   const ElementoAjuste = ({ titulo, subtitulo, onPress, componenteDerecha }) => (
     <TouchableOpacity style={styles.ajusteItem} onPress={onPress}>
@@ -16,7 +48,8 @@ const SettingsScreen = ({ navigation }) => {
       </View>
       {componenteDerecha || <Text style={styles.flecha}>›</Text>}
     </TouchableOpacity>
-  )
+  );
+
   return (
     <SafeAreaView style={styles.contenedor}>
       <View style={styles.encabezado}>
@@ -48,10 +81,30 @@ const SettingsScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.seccionBox}>
-          <Text style={styles.tituloSeccion}>Cronómetro</Text>
-          <ElementoAjuste titulo="Duración concentración" subtitulo="25 minutos" />
-          <ElementoAjuste titulo="Descanso corto" subtitulo="5 minutos" />
-          <ElementoAjuste titulo="Descanso largo" subtitulo="15 minutos" />
+          <Text style={styles.tituloSeccion}>Perfil</Text>
+          <TouchableOpacity onPress={handleImagePick} style={{ alignItems: "center", marginBottom: 16 }}>
+            {loading ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <Image
+                source={photo ? { uri: photo } : require("../../assets/default-profile.png")}
+                style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: "#eee" }}
+              />
+            )}
+            <Text style={{ color: "#1976d2", marginTop: 8 }}>Cambiar foto</Text>
+          </TouchableOpacity>
+          <TextInput
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
+            style={{ borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 12, marginBottom: 24 }}
+          />
+          <TouchableOpacity
+            onPress={handleSave}
+            style={{ backgroundColor: "#1976d2", padding: 14, borderRadius: 8, alignItems: "center" }}
+          >
+            <Text style={{ color: "#fff", fontWeight: "bold" }}>Guardar</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.seccionBox}>
@@ -76,7 +129,7 @@ const SettingsScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default SettingsScreen
+export default SettingsScreen;

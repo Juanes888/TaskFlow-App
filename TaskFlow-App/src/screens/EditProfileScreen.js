@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { auth } from "../services/firebaseConfig";
-import { saveUserProfile } from "../services/firestoreService";
+import { saveUserProfile, getUserProfile } from "../services/firestoreService"; // Asegúrate de que esta función esté implementada
 import { selectAndUploadImage } from "../services/cloudinaryService";
 
 const EditProfileScreen = ({ navigation }) => {
@@ -9,6 +9,19 @@ const EditProfileScreen = ({ navigation }) => {
     const [name, setName] = useState("");
     const [photo, setPhoto] = useState("");
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            if (user) {
+                const profile = await getUserProfile(user.uid); // Obtener el perfil del usuario
+                if (profile) {
+                    setName(profile.name);
+                    setPhoto(profile.photo);
+                }
+            }
+        };
+        fetchUserProfile();
+    }, [user]);
 
     const handleImagePick = async () => {
         setLoading(true);
@@ -19,7 +32,7 @@ const EditProfileScreen = ({ navigation }) => {
 
     const handleSave = async () => {
         if (!user) return;
-        await saveUserProfile(user.uid, { name, photo });
+        await saveUserProfile(user.uid, { name, photo }); // Guardar el perfil actualizado
         navigation.goBack();
     };
 
@@ -31,7 +44,7 @@ const EditProfileScreen = ({ navigation }) => {
                     <ActivityIndicator size="large" />
                 ) : (
                     <Image
-                        source={photo ? { uri: photo } : require("../../assets/default-avatar.png")}
+                        source={photo ? { uri: photo } : require("../../assets/default-profile.png")}
                         style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: "#eee" }}
                     />
                 )}
