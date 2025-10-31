@@ -17,7 +17,7 @@ export const pickImage = async () => {
     if (!hasPermission) return null;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'], // Corregido: usa array en vez de MediaTypeOptions
         allowsEditing: false,
         quality: 0.8,
     });
@@ -31,20 +31,34 @@ export const pickImage = async () => {
 export const uploadImageToCloudinary = async (imageUri) => {
     try {
         if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
+            console.error('Credenciales faltantes:', { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET });
             throw new Error('Las credenciales de Cloudinary no están configuradas');
         }
 
         const formData = new FormData();
-        const localUri = imageUri;
-        const filename = localUri.split('/').pop();
-        const match = /\.(\w+)$/.exec(filename);
-        const type = match ? `image/${match[1]}` : 'image/jpeg';
-
-        formData.append('file', {
-            uri: localUri,
-            name: filename,
-            type,
-        });
+        
+        // Para React Native Web, necesitamos manejar la imagen de forma diferente
+        if (typeof imageUri === 'string' && imageUri.startsWith('blob:')) {
+            // Es un blob URL (Web)
+            const response = await fetch(imageUri);
+            const blob = await response.blob();
+            formData.append('file', blob, 'photo.jpg');
+        } else if (typeof imageUri === 'string' && imageUri.startsWith('data:')) {
+            // Es base64
+            formData.append('file', imageUri);
+        } else {
+            // Para mobile (React Native nativo)
+            const localUri = imageUri;
+            const filename = localUri.split('/').pop();
+            const match = /\.(\w+)$/.exec(filename);
+            const type = match ? `image/${match[1]}` : 'image/jpeg';
+            
+            formData.append('file', {
+                uri: localUri,
+                name: filename,
+                type,
+            });
+        }
         
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
@@ -58,16 +72,13 @@ export const uploadImageToCloudinary = async (imageUri) => {
             {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },
             }
         );
 
         const responseData = await response.json();
 
         if (!response.ok) {
+            console.error('Cloudinary response error:', responseData);
             throw new Error(responseData.error?.message || 'Error al subir la imagen');
         }
 
