@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TaskFlow-App",
-    "slug": "TaskFlow-App",
+    "name": "TaskFlow",
+    "slug": "taskflow-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,8 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.taskflow.app",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.juanesteban.taskflow",
+      "deploymentTarget": "15.1"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,20 +23,32 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.taskflow.app"
+      "package": "com.juanesteban.taskflow",
+      "usesCleartextTraffic": true,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 21
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "scheme": "taskflow",
     "plugins": [
+      "expo-web-browser",
       [
-        "@react-native-google-signin/google-signin",
+        "expo-build-properties",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.YOUR_IOS_CLIENT_ID"
+          "android": {
+            "usesCleartextTraffic": true,
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 21
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
         }
-      ],
-      "expo-web-browser"
+      ]
     ]
   }
 }

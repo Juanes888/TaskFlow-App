@@ -1,253 +1,122 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  seccionBox: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.07,
-    shadowRadius: 8,
-    elevation: 2,
+  contenedorGlobal: {
+    flex: 1,
+    backgroundColor: '#1a1a2e',
+  },
+  gradientBackground: {
+    flex: 1,
   },
   contenedor: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  contenedorScroll: {
-    flex: 1,
   },
   encabezado: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#ffffff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 15,
   },
   botonVolver: {
     width: 40,
     height: 40,
-    justifyContent: "center",
-    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  textoVolver: {
+  titulo: {
     fontSize: 24,
-    color: "#1976d2",
-    fontWeight: "bold",
-  },
-  tituloEncabezado: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#212121",
-  },
-  espaciador: {
-    width: 40,
+    fontWeight: 'bold',
+    color: '#fff',
   },
   seccion: {
-    marginTop: 24,
+    paddingHorizontal: 20,
+    marginBottom: 25,
   },
   tituloSeccion: {
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#1976d2",
+    fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 12,
-    letterSpacing: 0.5,
   },
-  ajusteItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 14,
-    backgroundColor: 'transparent',
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
+  // Switch Items
+  switchItem: {
+    marginBottom: 10,
   },
-  ajusteContenido: {
+  switchGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  iconoContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  switchTextos: {
     flex: 1,
   },
-  ajusteTitulo: {
-    fontSize: 15,
-    color: "#222",
+  switchTitulo: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
     marginBottom: 2,
-    fontWeight: '500',
   },
-  ajusteSubtitulo: {
-    fontSize: 12,
-    color: "#757575",
-    marginTop: 1,
+  switchSubtitulo: {
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.6)',
   },
-  flecha: {
-    fontSize: 20,
-    color: "#9e9e9e",
-    fontWeight: "bold",
+  // Opción Items
+  opcionItem: {
+    marginBottom: 10,
   },
-  seccionCerrar: {
+  opcionGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 16,
-    marginTop: 16,
-    marginBottom: 32,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  opcionTextos: {
+    flex: 1,
+  },
+  opcionTitulo: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
+    marginBottom: 2,
+  },
+  opcionSubtitulo: {
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.6)',
+  },
+  // Cerrar Sesión
+  seccionCerrar: {
+    paddingHorizontal: 20,
+    marginTop: 10,
   },
   botonCerrar: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#d32f2f",
-    paddingVertical: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
+    paddingVertical: 18,
+    borderRadius: 16,
+    gap: 10,
   },
   textoCerrar: {
     fontSize: 16,
-    color: "#ffffff",
-    fontWeight: "bold",
-  },
-  // Estilos del perfil
-  perfilHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  editButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    backgroundColor: '#e3f2fd',
-  },
-  editButtonText: {
-    color: '#1976d2',
-    fontWeight: '600',
-    fontSize: 14,
-    marginLeft: 4,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    paddingVertical: 16,
-  },
-  profileImageContainer: {
-    position: 'relative',
-    marginBottom: 8,
-  },
-  profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#eee',
-    borderWidth: 3,
-    borderColor: '#1976d2',
-  },
-  profileImageOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    backgroundColor: '#1976d2',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: '#fff',
-  },
-  changePhotoText: {
-    color: '#1976d2',
-    fontSize: 13,
-    fontWeight: '600',
-    marginTop: 8,
-  },
-  profileInfoContainer: {
-    width: '100%',
-    marginTop: 8,
-  },
-  inputLabel: {
-    fontSize: 13,
-    color: '#424242',
-    fontWeight: '600',
-    marginBottom: 6,
-    marginLeft: 2,
-  },
-  profileInput: {
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 10,
-    padding: 12,
-    fontSize: 15,
-    backgroundColor: '#fafafa',
-    marginBottom: 16,
-    color: '#212121',
-  },
-  profileInputFocused: {
-    borderColor: '#1976d2',
-    backgroundColor: '#fff',
-  },
-  profileInputDisabled: {
-    backgroundColor: '#f5f5f5',
-    color: '#212121', // Cambiado de #757575 a #212121 para que se vea negro
-  },
-  editButtonsContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    marginTop: 8,
-  },
-  actionButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 14,
-    borderRadius: 10,
-    gap: 6,
-  },
-  cancelButton: {
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  cancelButtonText: {
-    color: '#666',
-    fontWeight: '600',
-    fontSize: 15,
-  },
-  saveButton: {
-    backgroundColor: '#1976d2',
-    shadowColor: '#1976d2',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  saveButtonDisabled: {
-    backgroundColor: '#9e9e9e',
-    shadowOpacity: 0,
-  },
-  saveButtonText: {
-    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 15,
-  },
-  successMessage: {
-    flexDirection: 'row',
-    backgroundColor: '#4caf50',
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  successMessageText: {
     color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
   },
 });
 

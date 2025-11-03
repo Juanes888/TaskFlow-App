@@ -1,35 +1,20 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../constants/Colors";
 
 export const estilos = StyleSheet.create({
-  formularioBox: {
-    backgroundColor: colors.surface,
-    borderRadius: 18,
-    padding: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.10,
-    shadowRadius: 12,
-    elevation: 6,
-    marginHorizontal: 8,
-    marginBottom: 16,
-    maxWidth: 400,
-    alignSelf: 'center',
-  },
   contenedor: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   fondoGradiente: {
     flex: 1,
   },
   scrollContenido: {
     flexGrow: 1,
+    justifyContent: 'center',
   },
   contenido: {
     flex: 1,
-    padding: 24,
     justifyContent: "center",
+    paddingHorizontal: 24,
     paddingVertical: 32,
   },
   encabezado: {
@@ -41,59 +26,52 @@ export const estilos = StyleSheet.create({
     marginBottom: 16,
   },
   titulo: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    color: colors.text,
+    color: "#FFFFFF",
     marginBottom: 8,
   },
   subtitulo: {
-    fontSize: 14,
-    color: colors.textSecondary,
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.7)",
     textAlign: "center",
   },
-  formulario: {
-    width: "100%",
+  formularioBox: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 18,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
   },
   grupoInput: {
     marginBottom: 16,
   },
   etiqueta: {
     fontSize: 14,
-    color: colors.text,
-    marginBottom: 4,
+    color: "rgba(255, 255, 255, 0.8)",
+    marginBottom: 8,
     fontWeight: "600",
   },
   input: {
-    backgroundColor: '#f7f7fa',
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     fontSize: 15,
-    marginBottom: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 2,
-    elevation: 1,
+    color: "#FFFFFF",
   },
   botonPrincipal: {
-    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 24,
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 3,
   },
   textoBoton: {
     fontSize: 16,
-    color: colors.surface,
+    color: "#FFFFFF",
     fontWeight: "bold",
   },
   loginContenedor: {
@@ -103,11 +81,12 @@ export const estilos = StyleSheet.create({
   },
   textoLogin: {
     fontSize: 14,
-    color: colors.textSecondary,
+    color: "rgba(255, 255, 255, 0.7)",
   },
   linkLogin: {
     fontSize: 14,
-    color: colors.primary,
+    color: "#FF5252",
     fontWeight: "bold",
+    marginLeft: 5,
   },
 });

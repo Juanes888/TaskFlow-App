@@ -1,9 +1,8 @@
+import 'react-native-get-random-values'; // ¡Añade esta línea al principio!
+
 import { registerRootComponent } from 'expo';
-
 import App from './App';
-import "./App"
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
+// registerRootComponent llama a AppRegistry.registerComponent('main', () => App);
+// Asegura que el entorno de la app se configure correctamente
 registerRootComponent(App);

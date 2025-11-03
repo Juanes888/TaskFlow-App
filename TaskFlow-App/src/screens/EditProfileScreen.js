@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { auth } from "../services/firebaseConfig";
-import { saveUserProfile, getUserProfile } from "../services/firestoreService"; // Asegúrate de que esta función esté implementada
+import { saveUserProfile, getUserProfile } from "../services/firestoreService"; 
 import { selectAndUploadImage } from "../services/cloudinaryService";
 
 const EditProfileScreen = ({ navigation }) => {
@@ -13,7 +13,7 @@ const EditProfileScreen = ({ navigation }) => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             if (user) {
-                const profile = await getUserProfile(user.uid); // Obtener el perfil del usuario
+                const profile = await getUserProfile(user.uid); 
                 if (profile) {
                     setName(profile.name);
                     setPhoto(profile.photo);
@@ -32,7 +32,7 @@ const EditProfileScreen = ({ navigation }) => {
 
     const handleSave = async () => {
         if (!user) return;
-        await saveUserProfile(user.uid, { name, photo }); // Guardar el perfil actualizado
+        await saveUserProfile(user.uid, { name, photo }); 
         navigation.goBack();
     };
 

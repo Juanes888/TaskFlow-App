@@ -17,7 +17,7 @@ export const pickImage = async () => {
     if (!hasPermission) return null;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'], // Corregido: usa array en vez de MediaTypeOptions
+        mediaTypes: ['images'], 
         allowsEditing: false,
         quality: 0.8,
     });
@@ -36,18 +36,13 @@ export const uploadImageToCloudinary = async (imageUri) => {
         }
 
         const formData = new FormData();
-        
-        // Para React Native Web, necesitamos manejar la imagen de forma diferente
         if (typeof imageUri === 'string' && imageUri.startsWith('blob:')) {
-            // Es un blob URL (Web)
             const response = await fetch(imageUri);
             const blob = await response.blob();
             formData.append('file', blob, 'photo.jpg');
         } else if (typeof imageUri === 'string' && imageUri.startsWith('data:')) {
-            // Es base64
             formData.append('file', imageUri);
         } else {
-            // Para mobile (React Native nativo)
             const localUri = imageUri;
             const filename = localUri.split('/').pop();
             const match = /\.(\w+)$/.exec(filename);

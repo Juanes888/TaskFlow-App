@@ -5,7 +5,7 @@ import { getUserProfile } from '../services/firestoreService';
 import { Image, View, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import SettingsScreen from '../screens/SettingsScreen';
-// Importa aquí tus otras pantallas
+
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +28,7 @@ const TabNavigator = () => {
     };
     
     loadUserPhoto();
-    
-    // Recargar foto cuando vuelve a la app
+
     const unsubscribe = auth.onAuthStateChanged(() => {
       loadUserPhoto();
     });
@@ -39,7 +38,6 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator>
-      {/* ...tus otras pestañas... */}
       
       <Tab.Screen 
         name="Profile" 
