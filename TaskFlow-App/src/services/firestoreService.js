@@ -5,6 +5,11 @@ import app from './firebaseConfig';
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+/**
+ * Obtiene el perfil de un usuario desde Firestore.
+ * @param {string} userId - El ID del usuario a buscar.
+ * @returns {Promise<Object|null>} Una promesa que resuelve con los datos del perfil del usuario o null si no se encuentra.
+ */
 export const getUserProfile = async (userId) => {
   try {
     if (!userId) {
@@ -31,6 +36,13 @@ export const getUserProfile = async (userId) => {
   }
 };
 
+/**
+ * Guarda o actualiza el perfil de un usuario en Firestore.
+ * @param {string} userId - El ID del usuario cuyo perfil se va a guardar.
+ * @param {Object} profileData - Un objeto con los datos del perfil a guardar.
+ * @returns {Promise<boolean>} Una promesa que resuelve a true si la operación fue exitosa.
+ * @throws {Error} Lanza un error si no se proporciona un ID de usuario o si falla la escritura.
+ */
 export const saveUserProfile = async (userId, profileData) => {
   if (!userId) {
     throw new Error("Se requiere un ID de usuario");
@@ -51,6 +63,13 @@ export const saveUserProfile = async (userId, profileData) => {
   }
 };
 
+/**
+ * Actualiza la foto de perfil de un usuario tanto en Firebase Authentication como en Firestore.
+ * @param {string} userId - El ID del usuario.
+ * @param {string} photoURL - La nueva URL de la foto de perfil.
+ * @returns {Promise<boolean>} Una promesa que resuelve a true si la actualización fue exitosa.
+ * @throws {Error} Lanza un error si no se proporciona un ID de usuario o si la actualización falla.
+ */
 export const updateUserProfilePhoto = async (userId, photoURL) => {
   if (!userId) {
     throw new Error("Se requiere un ID de usuario para actualizar el perfil.");
@@ -78,6 +97,10 @@ export const updateUserProfilePhoto = async (userId, photoURL) => {
   }
 };
 
+/**
+ * Obtiene una lista de todos los usuarios registrados en Firestore.
+ * @returns {Promise<Array<Object>>} Una promesa que resuelve con un array de objetos de usuario. Cada objeto incluye el id del documento y los datos del usuario. Retorna un array vacío en caso de error.
+ */
 export const getAllUsers = async () => {
   try {
     console.log("[FIRESTORE] Obteniendo todos los usuarios");

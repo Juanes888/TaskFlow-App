@@ -1,5 +1,14 @@
 
+/**
+ * @namespace TaskStatsService
+ * @description Un objeto de servicio que proporciona funciones para calcular estadísticas y logros basados en una lista de tareas.
+ */
 const TaskStatsService = {
+  /**
+   * Genera un conjunto completo de estadísticas a partir de una lista de tareas.
+   * @param {Array<Object>} tasks - Un array de objetos de tarea. Se espera que cada objeto tenga `status` y `priority`.
+   * @returns {Object} Un objeto que contiene estadísticas como el total de tareas, completadas, pendientes, tasa de finalización, desglose por prioridad y productividad semanal.
+   */
   generateStats(tasks) {
     if (!tasks || tasks.length === 0) {
       return {
@@ -31,6 +40,11 @@ const TaskStatsService = {
     };
   },
 
+  /**
+   * Genera datos de productividad simulados para una semana.
+   * @param {Array<Object>} tasks - El array de tareas (actualmente no se utiliza en el cálculo, pero se incluye para futuras mejoras).
+   * @returns {Array<Object>} Un array de objetos, donde cada objeto representa un día de la semana y un valor de productividad aleatorio.
+   */
   getWeeklyProductivity(tasks) {
     const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     return days.map(day => ({
@@ -39,6 +53,11 @@ const TaskStatsService = {
     }));
   },
 
+  /**
+   * Verifica qué logros ha desbloqueado el usuario basándose en las tareas completadas.
+   * @param {Array<Object>} tasks - Un array de objetos de tarea. Se espera que cada objeto tenga `status` y `priority`.
+   * @returns {Array<Object>} Un array que contiene los logros desbloqueados. Cada logro es un objeto con `id`, `name`, y `description`.
+   */
   checkAchievements(tasks) {
     const completedTasksCount = tasks.filter(t => t.status === 'completed').length;
     const unlockedAchievements = [];

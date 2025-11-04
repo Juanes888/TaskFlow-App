@@ -26,6 +26,19 @@ const init = () => {
   );
 };
 
+/**
+ * Inserta o actualiza una tarea en la base de datos.
+ * Si el ID de la tarea ya existe, la actualiza. Si no, crea una nueva.
+ * @param {string} id - El identificador único de la tarea.
+ * @param {object} taskData - El objeto con los datos de la tarea.
+ * @param {string} taskData.title - El título de la tarea.
+ * @param {string} [taskData.description=null] - La descripción (opcional).
+ * @param {string} [taskData.dueDate=null] - La fecha de vencimiento (opcional).
+ * @param {string} [taskData.priority='media'] - La prioridad ('alta', 'media', 'baja').
+ * @param {string} [taskData.status='pending'] - El estado ('pending', 'completed').
+ * @param {string} taskData.userId - El ID del usuario al que pertenece la tarea.
+ * @returns {object|null} El resultado de la operación de la base de datos, o null si no está disponible.
+ */
 const upsertTask = (id, { title, description = null, dueDate = null, priority = 'media', status = 'pending', userId }) => {
   if (!db) {
     console.warn("Base de datos no disponible en web");

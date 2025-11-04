@@ -5,10 +5,24 @@ import { estilos } from "../../styles/LoginScreenStyles";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 
+/**
+ * Pantalla de inicio de sesión de la aplicación.
+ * Permite a los usuarios ingresar con su correo electrónico y contraseña.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation para moverse a otras pantallas.
+ * @returns {React.ReactElement} El componente de la pantalla de inicio de sesión.
+ */
 const LoginScreen = ({ navigation }) => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
 
+  /**
+   * Maneja el proceso de inicio de sesión del usuario.
+   * Valida que los campos no estén vacíos y utiliza Firebase para autenticar.
+   * Muestra una alerta en caso de error.
+   * @async
+   */
   const manejarLogin = async () => {
     if (!correo || !contrasena) {
       alert("Por favor, completa todos los campos.");

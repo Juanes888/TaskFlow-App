@@ -14,6 +14,15 @@ import { auth } from "../services/firebaseConfig";
 import { getUserData, saveUserProfile } from "../services/firestoreService";
 import styles from "../styles/SettingsScreenStyles";
 
+/**
+ * Pantalla de configuración de la aplicación.
+ * Permite al usuario gestionar preferencias de notificaciones, apariencia, sonido,
+ * datos y cuenta. También incluye la opción de cerrar sesión.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de configuración.
+ */
 const SettingsScreen = ({ navigation }) => {
   const [notificaciones, setNotificaciones] = useState(true);
   const [modoOscuro, setModoOscuro] = useState(true);
@@ -26,6 +35,11 @@ const SettingsScreen = ({ navigation }) => {
     loadUserSettings();
   }, []);
 
+  /**
+   * Carga la configuración del usuario desde Firestore al iniciar la pantalla.
+   * Si no hay configuración guardada, utiliza valores por defecto.
+   * @async
+   */
   const loadUserSettings = async () => {
     try {
       const user = auth.currentUser;
@@ -44,6 +58,12 @@ const SettingsScreen = ({ navigation }) => {
     }
   };
 
+  /**
+   * Guarda una clave de configuración específica en el perfil del usuario en Firestore.
+   * @async
+   * @param {string} key - La clave de la configuración a guardar (ej. 'notificaciones').
+   * @param {*} value - El nuevo valor para la clave de configuración.
+   */
   const saveSettings = async (key, value) => {
     try {
       const user = auth.currentUser;
@@ -64,6 +84,10 @@ const SettingsScreen = ({ navigation }) => {
     }
   };
 
+  /**
+   * Maneja el proceso de cierre de sesión.
+   * Muestra una alerta de confirmación antes de cerrar la sesión del usuario.
+   */
   const handleLogout = () => {
     Alert.alert(
       "Cerrar Sesión",
@@ -86,6 +110,16 @@ const SettingsScreen = ({ navigation }) => {
     );
   };
 
+  /**
+   * Componente reutilizable para una opción de menú que no tiene un interruptor (switch).
+   * @param {object} props - Propiedades del componente.
+   * @param {string} props.icono - Nombre del icono de MaterialCommunityIcons.
+   * @param {string} props.titulo - El texto principal de la opción.
+   * @param {string} [props.subtitulo] - El texto secundario (opcional).
+   * @param {function} props.onPress - Función a ejecutar al presionar la opción.
+   * @param {string} [props.color='#FF5252'] - Color del icono.
+   * @returns {React.ReactElement}
+   */
   const OpcionItem = ({ icono, titulo, subtitulo, onPress, color = "#FF5252" }) => (
     <TouchableOpacity style={styles.opcionItem} onPress={onPress}>
       <LinearGradient
@@ -104,6 +138,17 @@ const SettingsScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  /**
+   * Componente reutilizable para una opción de menú que incluye un interruptor (switch).
+   * @param {object} props - Propiedades del componente.
+   * @param {string} props.icono - Nombre del icono de MaterialCommunityIcons.
+   * @param {string} props.titulo - El texto principal de la opción.
+   * @param {string} [props.subtitulo] - El texto secundario (opcional).
+   * @param {boolean} props.valor - El valor actual del interruptor (true o false).
+   * @param {function} props.onValueChange - Función que se ejecuta cuando cambia el valor del interruptor.
+   * @param {string} [props.color='#FF5252'] - Color del icono y del interruptor.
+   * @returns {React.ReactElement}
+   */
   const SwitchItem = ({ icono, titulo, subtitulo, valor, onValueChange, color = "#FF5252" }) => (
     <View style={styles.switchItem}>
       <LinearGradient

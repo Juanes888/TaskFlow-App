@@ -6,6 +6,18 @@ import { Image, View, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import SettingsScreen from '../screens/SettingsScreen';
 
+/**
+ * Componente principal que renderiza la barra de navegación inferior (Tab Navigator).
+ *
+ * Este componente define las pestañas principales de la aplicación (Inicio, Usuario, Configuración, Estadísticas)
+ * y gestiona la lógica para mostrar los íconos correspondientes.
+ *
+ * Se encarga de obtener la foto de perfil del usuario actual y mostrarla como el ícono
+ * de la pestaña "Usuario". La foto se actualiza cada vez que la pantalla obtiene el foco.
+ *
+ * @returns {React.ReactElement} El navegador de pestañas configurado.
+ */
+
 
 const Tab = createBottomTabNavigator();
 

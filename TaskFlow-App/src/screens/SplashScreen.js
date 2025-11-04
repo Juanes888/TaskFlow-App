@@ -3,7 +3,21 @@ import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { colors } from "../constants/Colors";
 
+/**
+ * Pantalla de bienvenida (Splash Screen) que se muestra al iniciar la aplicación.
+ * Muestra el logo y el nombre de la aplicación durante un breve período antes de
+ * redirigir al usuario a la pantalla de inicio de sesión.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de bienvenida.
+ */
 const SplashScreen = ({ navigation }) => {
+  /**
+   * Efecto que se ejecuta al montar el componente.
+   * Inicia un temporizador de 2 segundos y, una vez transcurrido,
+   * redirige al usuario a la pantalla 'Login'.
+   */
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace("Login");

@@ -7,6 +7,15 @@ const { height, width } = Dimensions.get('window');
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
+/**
+ * Pantalla de "Modo Concentración" que implementa un temporizador Pomodoro con una animación de líquido.
+ * El usuario puede seleccionar una duración, iniciar, pausar y reiniciar el temporizador.
+ * La animación de una ola líquida sube para representar el progreso del tiempo.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de concentración.
+ */
 export default function ConcentrationScreen({ navigation }) {
   const [selectedMinutes, setSelectedMinutes] = useState(25);
   const [isRunning, setIsRunning] = useState(false);
@@ -23,39 +32,27 @@ export default function ConcentrationScreen({ navigation }) {
 
   const timeOptions = [5, 10, 15, 25, 30, 45, 60];
 
- 
+  /**
+   * Efecto para iniciar las animaciones de las olas en un bucle infinito.
+   * Se ejecuta una sola vez cuando el componente se monta.
+   */
   useEffect(() => {
     Animated.loop(
       Animated.parallel([
-        Animated.timing(wave1, {
-          toValue: 1,
-          duration: 2500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(wave2, {
-          toValue: 1,
-          duration: 3000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(wave3, {
-          toValue: 1,
-          duration: 3500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(wave4, {
-          toValue: 1,
-          duration: 4000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(wave5, {
-          toValue: 1,
-          duration: 4500,
-          useNativeDriver: true,
-        }),
+        Animated.timing(wave1, { toValue: 1, duration: 2500, useNativeDriver: true }),
+        Animated.timing(wave2, { toValue: 1, duration: 3000, useNativeDriver: true }),
+        Animated.timing(wave3, { toValue: 1, duration: 3500, useNativeDriver: true }),
+        Animated.timing(wave4, { toValue: 1, duration: 4000, useNativeDriver: true }),
+        Animated.timing(wave5, { toValue: 1, duration: 4500, useNativeDriver: true }),
       ])
     ).start();
   }, []);
 
+  /**
+   * Efecto que maneja el contador del temporizador.
+   * Inicia un intervalo cuando `isRunning` es true y el tiempo no ha terminado.
+   * Limpia el intervalo al pausar, al terminar o al desmontar el componente.
+   */
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
       intervalRef.current = setInterval(() => {
@@ -74,6 +71,10 @@ export default function ConcentrationScreen({ navigation }) {
     return () => clearInterval(intervalRef.current);
   }, [isRunning, timeLeft]);
 
+  /**
+   * Efecto que actualiza la altura de la animación del líquido
+   * basándose en el progreso del tiempo restante.
+   */
   useEffect(() => {
     const progress = 1 - (timeLeft / totalTime);
     Animated.spring(liquidHeight, {
@@ -84,16 +85,27 @@ export default function ConcentrationScreen({ navigation }) {
     }).start();
   }, [timeLeft]);
 
+  /**
+   * Inicia el temporizador con los minutos seleccionados.
+   * Establece el tiempo total y restante, y activa el estado `isRunning`.
+   */
   const handleStart = () => {
     setTotalTime(selectedMinutes * 60);
     setTimeLeft(selectedMinutes * 60);
     setIsRunning(true);
   };
 
+  /**
+   * Pausa o reanuda el temporizador.
+   */
   const handlePause = () => {
     setIsRunning(!isRunning);
   };
 
+  /**
+   * Reinicia el temporizador a su estado inicial con los minutos seleccionados.
+   * Detiene el contador y resetea la animación del líquido.
+   */
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(selectedMinutes * 60);
@@ -101,11 +113,20 @@ export default function ConcentrationScreen({ navigation }) {
     liquidHeight.setValue(0);
   };
 
+  /**
+   * Se ejecuta cuando el temporizador llega a cero.
+   * Detiene el contador y muestra una alerta de finalización.
+   */
   const handleFinish = () => {
     setIsRunning(false);
     alert('¡Felicidades! Completaste tu sesión de concentración 🎉');
   };
 
+  /**
+   * Formatea un número de segundos al formato "MM:SS".
+   * @param {number} seconds - El total de segundos a formatear.
+   * @returns {string} El tiempo formateado como una cadena de texto.
+   */
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

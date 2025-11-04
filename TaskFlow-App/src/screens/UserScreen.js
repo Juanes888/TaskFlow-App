@@ -22,6 +22,15 @@ const logros = [
   { titulo: "Leyenda", descripcion: "Mantén una racha de 30 días", icono: "👑", desbloqueado: false },
 ];
 
+/**
+ * Pantalla de perfil del usuario.
+ * Muestra la información del usuario (foto, nombre, correo), estadísticas,
+ * progreso de nivel y logros. Permite al usuario cambiar su foto de perfil.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de usuario.
+ */
 const UserScreen = ({ navigation }) => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -31,6 +40,10 @@ const UserScreen = ({ navigation }) => {
     loadProfilePhoto();
   }, []);
 
+  /**
+   * Carga la foto de perfil del usuario desde Firestore al iniciar la pantalla.
+   * @async
+   */
   const loadProfilePhoto = async () => {
     if (!user) return;
     try {
@@ -43,6 +56,11 @@ const UserScreen = ({ navigation }) => {
     }
   };
 
+  /**
+   * Abre la galería de imágenes del dispositivo para que el usuario seleccione una nueva foto de perfil.
+   * Una vez seleccionada, la guarda en el perfil del usuario en Firestore.
+   * @async
+   */
   const pickImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({

@@ -5,12 +5,27 @@ import { estilos } from "../../styles/RegisterScreenStyles";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 
+/**
+ * Pantalla de registro para nuevos usuarios.
+ * Permite a los usuarios crear una nueva cuenta proporcionando su nombre, correo y contraseña.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation para moverse a otras pantallas.
+ * @returns {React.ReactElement} El componente de la pantalla de registro.
+ */
 const RegisterScreen = ({ navigation }) => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [confirmarContrasena, setConfirmarContrasena] = useState("");
 
+  /**
+   * Maneja el proceso de creación de una nueva cuenta de usuario.
+   * Utiliza Firebase para crear el usuario con correo y contraseña.
+   * Si el registro es exitoso, navega a la pantalla de Login.
+   * Muestra una alerta si ocurre un error.
+   * @async
+   */
   const manejarRegistro = async () => {
     try {
       await createUserWithEmailAndPassword(auth, correo, contrasena);

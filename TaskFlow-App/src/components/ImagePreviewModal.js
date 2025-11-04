@@ -15,6 +15,19 @@ const colors = {
   fondo: '#F5F5F5',
 };
 
+/**
+ * Un componente modal que muestra una vista previa de una imagen seleccionada.
+ * Proporciona opciones para confirmar o cancelar la selección de la imagen.
+ * Muestra un indicador de carga mientras se procesa la confirmación.
+ *
+ * @param {object} props - Las propiedades del componente.
+ * @param {boolean} props.visible - Determina si el modal está visible o no.
+ * @param {string} props.imageUri - La URI de la imagen que se va a previsualizar.
+ * @param {boolean} props.loading - Si es `true`, muestra un indicador de carga en el botón de confirmar.
+ * @param {function} props.onConfirm - Función que se ejecuta al presionar el botón "Confirmar".
+ * @param {function} props.onCancel - Función que se ejecuta al presionar "Cancelar" o al cerrar el modal.
+ * @returns {React.ReactElement} El componente del modal de vista previa de imagen.
+ */
 const ImagePreviewModal = ({
   visible,
   imageUri,

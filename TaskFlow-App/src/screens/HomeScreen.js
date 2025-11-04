@@ -7,9 +7,22 @@ import taskDatabase from '../services/SqliteServices';
 import { auth } from '../services/firebaseConfig';
 import TaskStatsService from '../services/TaskStatsService';
 
+/**
+ * Pantalla principal de la aplicación (Dashboard).
+ * Muestra un saludo, el progreso de las tareas del día, acciones rápidas y la lista de tareas del usuario.
+ * Permite al usuario completar, desmarcar y eliminar tareas.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de inicio.
+ */
 const HomeScreen = ({ navigation }) => {
   const [tareas, setTareas] = useState([]);
 
+  /**
+   * Carga las tareas del usuario actual desde la base de datos local (SQLite)
+   * y actualiza el estado del componente.
+   */
   const cargarTareas = () => {
     const user = auth.currentUser;
     if (user) {
@@ -23,12 +36,17 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  // Hook que recarga las tareas cada vez que la pantalla vuelve a estar en foco.
   useFocusEffect(
     useCallback(() => {
       cargarTareas();
     }, [])
   );
 
+  /**
+   * Cambia el estado de una tarea entre 'completed' y 'pending'.
+   * @param {string} id - El ID de la tarea a modificar.
+   */
   const alternarTarea = (id) => {
     const tarea = tareas.find(t => t.id === id);
     if (tarea) {
@@ -42,6 +60,11 @@ const HomeScreen = ({ navigation }) => {
   const totalTareas = tareas.length;
   const progreso = totalTareas > 0 ? (tareasCompletadas / totalTareas) * 100 : 0;
 
+  /**
+   * Devuelve un color hexadecimal basado en el nivel de prioridad de una tarea.
+   * @param {string} prioridad - La prioridad de la tarea ('alta', 'media', 'baja').
+   * @returns {string} El color correspondiente a la prioridad.
+   */
   const getPrioridadColor = (prioridad) => {
     switch(prioridad) {
       case 'alta': return '#FF5252';
@@ -57,6 +80,11 @@ const HomeScreen = ({ navigation }) => {
     alert(`¡Logro desbloqueado: ${logrosDesbloqueados[0].name}!`);
   }
 
+  /**
+   * Muestra un menú de opciones cuando un usuario mantiene presionada una tarea.
+   * Actualmente, la única opción es "Eliminar".
+   * @param {string} id - El ID de la tarea sobre la que se mantuvo la pulsación.
+   */
   const manejarPulsacionLarga = (id) => {
     Alert.alert(
       "Opciones de Tarea",
@@ -75,6 +103,11 @@ const HomeScreen = ({ navigation }) => {
     );
   };
 
+  /**
+   * Muestra una alerta de confirmación final antes de eliminar una tarea.
+   * Si el usuario confirma, procede a eliminar la tarea de la base de datos.
+   * @param {string} id - El ID de la tarea a eliminar.
+   */
   const confirmarEliminacion = (id) => {
     Alert.alert(
       "¿Estás seguro?",

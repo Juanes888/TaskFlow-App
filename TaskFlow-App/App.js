@@ -23,9 +23,18 @@ import AddTaskScreen from "./src/screens/AddTaskScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+/**
+ * Componente que renderiza la navegación principal de la aplicación mediante pestañas (Tabs).
+ * Gestiona la visualización de la foto de perfil del usuario en la pestaña 'Usuario'.
+ * @returns {React.Component} El navegador de pestañas principal.
+ */
 function MainTabs() {
   const [userPhoto, setUserPhoto] = useState(null);
 
+  /**
+   * Obtiene la URL de la foto de perfil del usuario actual desde Firestore.
+   * Actualiza el estado `userPhoto` con la URL obtenida o lo establece en `null`.
+   */
   const fetchUserPhoto = useCallback(async () => {
     if (auth.currentUser) {
       try {
@@ -42,12 +51,15 @@ function MainTabs() {
     }
   }, []);
 
+  // Hook que se ejecuta cada vez que la pantalla de pestañas obtiene el foco.
   useFocusEffect(
     useCallback(() => {
       fetchUserPhoto();
     }, [fetchUserPhoto])
   );
 
+  // Hook que se ejecuta al montar el componente para establecer el estado de la foto
+  // y suscribirse a los cambios de autenticación.
   useEffect(() => {
     fetchUserPhoto();
 
@@ -144,10 +156,17 @@ function MainTabs() {
   );
 }
 
+/**
+ * Componente raíz de la aplicación.
+ * Gestiona el estado de carga y autenticación para mostrar la pantalla de bienvenida (Splash),
+ * las pantallas de autenticación (Login/Register) o la navegación principal de la aplicación.
+ * @returns {React.Component} El contenedor de navegación principal de la aplicación.
+ */
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Hook de efecto para inicializar la base de datos y verificar el estado de autenticación del usuario.
   useEffect(() => {
     taskDatabase.init();
 
@@ -159,6 +178,7 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
+  // Muestra la pantalla de bienvenida mientras se verifica el estado.
   if (isLoading) {
     return <SplashScreen />;
   }

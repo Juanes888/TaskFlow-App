@@ -6,11 +6,25 @@ import taskDatabase from '../services/SqliteServices';
 import { auth } from '../services/firebaseConfig';
 import { v4 as uuidv4 } from 'uuid'; 
 
+/**
+ * Pantalla que permite a los usuarios crear una nueva tarea.
+ * Contiene un formulario para ingresar el título, la descripción y la prioridad de la tarea.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation para moverse a otras pantallas.
+ * @returns {React.ReactElement} El componente de la pantalla para añadir tareas.
+ */
 const AddTaskScreen = ({ navigation }) => {
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [prioridad, setPrioridad] = useState('media');
 
+  /**
+   * Maneja la lógica para guardar una nueva tarea en la base de datos.
+   * Valida que el título no esté vacío y que el usuario esté autenticado.
+   * Crea un objeto de tarea con un ID único y lo guarda usando `taskDatabase.upsertTask`.
+   * Muestra alertas de éxito o error y navega hacia atrás si la operación es exitosa.
+   */
   const manejarGuardarTarea = () => {
     if (!titulo.trim()) {
       Alert.alert('Error', 'El título de la tarea es obligatorio.');

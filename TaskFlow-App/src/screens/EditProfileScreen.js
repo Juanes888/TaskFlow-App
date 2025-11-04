@@ -4,12 +4,24 @@ import { auth } from "../services/firebaseConfig";
 import { saveUserProfile, getUserProfile } from "../services/firestoreService"; 
 import { selectAndUploadImage } from "../services/cloudinaryService";
 
+/**
+ * Pantalla que permite al usuario editar su perfil, incluyendo su nombre y foto.
+ * Carga los datos del perfil actual del usuario y permite actualizarlos.
+ *
+ * @param {object} props - Propiedades del componente.
+ * @param {object} props.navigation - Objeto de navegación de React Navigation.
+ * @returns {React.ReactElement} El componente de la pantalla de edición de perfil.
+ */
 const EditProfileScreen = ({ navigation }) => {
     const user = auth.currentUser;
     const [name, setName] = useState("");
     const [photo, setPhoto] = useState("");
     const [loading, setLoading] = useState(false);
 
+    /**
+     * Efecto que se ejecuta al montar el componente para obtener y cargar
+     * los datos del perfil del usuario actual desde Firestore.
+     */
     useEffect(() => {
         const fetchUserProfile = async () => {
             if (user) {
@@ -23,6 +35,11 @@ const EditProfileScreen = ({ navigation }) => {
         fetchUserProfile();
     }, [user]);
 
+    /**
+     * Maneja la selección y carga de una nueva imagen de perfil.
+     * Utiliza el servicio `cloudinaryService` para subir la imagen y obtener la URL.
+     * @async
+     */
     const handleImagePick = async () => {
         setLoading(true);
         const url = await selectAndUploadImage();
@@ -30,6 +47,11 @@ const EditProfileScreen = ({ navigation }) => {
         setLoading(false);
     };
 
+    /**
+     * Guarda los cambios realizados en el perfil del usuario en Firestore.
+     * Una vez guardado, navega a la pantalla anterior.
+     * @async
+     */
     const handleSave = async () => {
         if (!user) return;
         await saveUserProfile(user.uid, { name, photo }); 
